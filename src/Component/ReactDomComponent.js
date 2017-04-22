@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import instantiateReactComponent from '../util/instantiateReactComponent';
 function ReactDomComponent(element) {
     this._currrentElement = element;
@@ -15,8 +16,10 @@ ReactDomComponent.prototype.mountComponent = function (rootID) {
     for (const propKey in props) {
         if (Object.prototype.hasOwnProperty.call(props, propKey)) {
             // 事件
-            if (/^on.*/.test(propKey)) {
+            if (/^on[A-Za-z]/.test(propKey)) {
                 // 添加事件
+                const eventType = propKey.replace('on', '');
+                $(document).delegate(`[data-reactid="${this._rootNodeID}"]`, `${eventType}.${this._rootNodeID}`, props[propKey]);
                 continue;
             }
             // children
