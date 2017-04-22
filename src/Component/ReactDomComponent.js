@@ -4,6 +4,7 @@ function ReactDomComponent(element) {
     this._rootNodeID = null;
 }
 ReactDomComponent.prototype.mountComponent = function (rootID) {
+    this._rootNodeID = rootID;
     const tag = this._currrentElement.type;
     const props = this._currrentElement.props;
     let propsTag = ` data-reactid="${rootID}"`;
@@ -21,9 +22,10 @@ ReactDomComponent.prototype.mountComponent = function (rootID) {
             // children
             if (propKey === 'children') {
                 const children = props.children;
-                children.forEach((child) => {
+                children.forEach((child, index) => {
                     const childInst = instantiateReactComponent(child);
-                    const markup = childInst.mountComponent();
+                    const rootID = `${this._rootNodeID}.${index}`;
+                    const markup = childInst.mountComponent(rootID);
                     childrenMarkup += `${markup}`;
                 });
                 continue;
