@@ -4,6 +4,8 @@ const config = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'react.js',
+        libraryTarget: 'var',
+        library: 'React',
     },
     devtool: 'eval-source-map',
     module: {
@@ -14,5 +16,6 @@ const config = {
             },
         ],
     },
+    watch: true,
 };
 module.exports = config;
