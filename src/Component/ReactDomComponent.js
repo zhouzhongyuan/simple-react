@@ -21,19 +21,19 @@ ReactDomComponent.prototype.mountComponent = function (rootID) {
             }
             // children
             if (propKey === 'children') {
-                const children = props.children;
-                children.forEach((child, index) => {
-                    const childInst = instantiateReactComponent(child);
-                    const rootID = `${this._rootNodeID}.${index}`;
-                    const markup = childInst.mountComponent(rootID);
-                    childrenMarkup += `${markup}`;
-                });
                 continue;
             }
             // 普通
             propsTag += `${propKey}="${props[propKey]}"`;
         }
     }
+    const children = props.children;
+    children.forEach((child, index) => {
+        const childInst = instantiateReactComponent(child);
+        const rootID = `${this._rootNodeID}.${index}`;
+        const markup = childInst.mountComponent(rootID);
+        childrenMarkup += `${markup}`;
+    });
     return `<${tag} ${propsTag}>${childrenMarkup}</${tag}>`;
 };
 export default ReactDomComponent;
