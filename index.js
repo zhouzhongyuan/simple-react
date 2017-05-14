@@ -49,6 +49,7 @@ const React = {
         const inst = instantiateReactComponent(element);
         const markup = inst.mountComponent(React.nextReactRootIndex++);
         $(container).html(markup);
+        $(document).trigger('mountReady');
     },
 };
 export default React;
