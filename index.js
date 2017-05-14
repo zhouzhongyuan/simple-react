@@ -5,9 +5,19 @@ function ReactElement(type, key, props) {
     this.key = key;
     this.props = props;
 }
+function ReactClass() {}
+ReactClass.prototype.render = function () {};
 const React = {
     nextReactRootIndex: 0,
-    createClass() {
+    createClass(spec) {
+        const Constructor = function (props) {
+            this.props = props;
+            this.state = this.getInitialState ? this.getInitialState() : null;
+        };
+        Constructor.prototype = new ReactClass();
+        Constructor.prototype.constructor = Constructor;
+        $.extend(Constructor.prototype, spec);
+        return Constructor;
     },
     createElement(type, config, children) {
         const props = {};
